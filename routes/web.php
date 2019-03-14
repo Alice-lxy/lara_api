@@ -16,3 +16,5 @@ $router->get('/', function () use ($router) {
 });
 //用户登录
 $router->post('/u/l','User\UserController@login');
+
+$router->get('/u/c','User\UserController@center');
