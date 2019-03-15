@@ -8,9 +8,7 @@
     class UserController
     {
         public $redis_h_u_key = 'user:h:u';
-        /*
-         * 用户登录
-         * */
+        /** 用户登录 */
         public function login(Request $request){
             $name = $request->input('u');
             $pwd = $request->input('p');
@@ -28,26 +26,42 @@
                 //todo 失败
             }
         }
-        /*
-         * 个人中心*/
+        /** 个人中心*/
         public function center(){
-            //客户端通过header将数据传过来 ，接受
-            //echo '<pre>';print_r($_SERVER);echo '</pre>';
-            if(empty($_SERVER['HTTP_TOKEN'])){
-                $response = [
-                    'errno' =>  5000,
-                    'msg'   => '致命错误'
-                ];
+            echo 'ok';
+        }
+        /** 防刷*/
+       /* public function order(){
+//            print_r($_SERVER);echo '<br/>';die;
+            $request_uri = $_SERVER['REQUEST_URI'];
+            $hash_uri = substr(md5($request_uri),0,10);
+            echo $hash_uri;echo '<br/>';
+            $ip = $_SERVER['REMOTE_ADDR'];    //获取客户端IP
+            echo $ip;echo '<br/>';
+
+            $redis_key = 'str:' . $hash_uri .':'. $ip;
+            echo $redis_key;echo '<br/>';
+
+            $keys_num = Redis::incr($redis_key);    //incr 自增1
+            echo $keys_num;echo '<br/>';
+            Redis::expire($redis_key,60);
+
+            if($keys_num>6){
+                 $response = [
+                     'errno'    =>  5000,
+                     'msg'      =>  '您已错失良机,',
+                 ];
+                Redis::expire($redis_key,600);//十分钟后方可执行
             }else{
                 $response = [
-                    'errno' => 0,
+                    'errno' =>  0,
                     'msg'   =>  'ok',
                     'data'  =>  [
-                        'user'  => 'aaa',
-                        'age'   =>  111
+                        'name'   =>  'bbb',
+                        'age'   =>  111,
                     ],
                 ];
             }
             return $response;
-        }
+        }*/
     }

@@ -16,5 +16,11 @@ $router->get('/', function () use ($router) {
 });
 //用户登录
 $router->post('/u/l','User\UserController@login');
-
-$router->get('/u/c','User\UserController@center');
+//个人中心
+//$router->get('/u/c','User\UserController@center');
+//防刷
+//$router->get('/u/order','User\UserController@order');
+$router->get('/u/c', [
+    'middleware' => 'user',
+    'as' => '/u/c', 'uses' => 'User\UserController@center'
+]);
